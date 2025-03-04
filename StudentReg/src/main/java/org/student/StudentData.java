@@ -6,6 +6,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.time.Year;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class StudentData {
     JFrame frame;
@@ -18,7 +22,16 @@ public class StudentData {
     JTree jTree;
     JPanel centerpanel;
     ButtonGroup buttonGroup;
+    JButton button1,button2;
+    int yearOfBirth,dayofBirth,monthofBirth;
+    JLabel Age=new JLabel(),Gender=new JLabel(),Course=new JLabel(),Name=new JLabel(),field_study=new JLabel(),birthDay=new JLabel();
+    JTextField NameField;
+    JTextArea fieldOfStudy;
+    String name;
+    ArrayList<Student> students=new ArrayList<>();
+
 actionListner al=new actionListner();
+
     public StudentData(){
         this.DataFrameMethod();
     }
@@ -71,35 +84,32 @@ actionListner al=new actionListner();
 
     public JPanel datapanel(){
         JPanel panel=new JPanel();
+        button1=new JButton("BACK");
+        button1.setBounds(20,0,40,30);
+        button1.setBorder(BorderFactory.createEmptyBorder(0,10,0,0));
+        button1.setBackground(new Color(176,196,222));
+        button2=new JButton("SAVE");
+        button2.setBounds(0,0,40,30);
+        button2.setBackground(new Color(85,107,47));
         panel.setSize(new Dimension(200,200));
         GridLayout gridLayout=new GridLayout(7,2,10,10);
         gridLayout.setVgap(10);
         gridLayout.setHgap(10);
         panel.setLayout(gridLayout);
-
-        JTextField textField1=new JTextField();
-
-        JTextArea textArea3=new JTextArea();
-
-        JTextField textField2=new JTextField();
-        textField1.setBounds(25,25,200,200);
-        textField2.setSize(200,300);
-
-
-
+        NameField=new JTextField();
+        fieldOfStudy=new JTextArea();
+        NameField.setBounds(25,25,200,200);
         panel.add(Blocks.label("Name"));
-        panel.add(textField1);
+        panel.add(NameField);
         panel.add(Blocks.label("Field of Study"));
-        panel.add(textArea3);
+        panel.add(fieldOfStudy);
         panel.add(Blocks.label("BirthDay"));
         panel.add(Blocks.calendar());
         panel.add(Blocks.label("Course"));
         panel.add(Blocks.combo());
         panel.add(Blocks.label("Gender"));
-
         //Group radio buttons
         buttonGroup = new ButtonGroup();
-        buttonGroup.getSelection();
         buttonGroup.add(radioButton);
         buttonGroup.add(radioButton2);
         radioButton.setText("Male");
@@ -107,8 +117,9 @@ actionListner al=new actionListner();
         panel.add(this.radioButton);
         panel.add(Blocks.label(""));
         panel.add(this.radioButton2);
-        panel.add(Blocks.button("Save"));
-        panel.add(Blocks.button("Exit"));
+        button2.addActionListener(al);
+        panel.add(button1);
+        panel.add(button2);
         return panel;
     }
 
@@ -119,27 +130,27 @@ actionListner al=new actionListner();
         // Add labels and values separated by a JSeparator
         panel.add(new JLabel("Name:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("John Doe", SwingConstants.LEFT)); // Value
+        panel.add(Name); // Value
 
         panel.add(new JLabel("Birth Day:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("30", SwingConstants.LEFT)); // Value
+        panel.add(birthDay); // Value
 
         panel.add(new JLabel("Age:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("Software Engineer", SwingConstants.LEFT)); // Value
+        panel.add(Age); // Value
 
         panel.add(new JLabel("Field of Study:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("New York", SwingConstants.LEFT)); // Value
+        panel.add(field_study); // Value
 
         panel.add(new JLabel("Course:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("New York", SwingConstants.LEFT)); // Value
+        panel.add(Course); // Value
 
         panel.add(new JLabel("Gender:", SwingConstants.RIGHT)); // Label
         panel.add(new JSeparator(SwingConstants.VERTICAL)); // Separator
-        panel.add(new JLabel("New York", SwingConstants.LEFT)); // Value
+        panel.add(Gender); // Value
         return panel;
 
     }
@@ -167,7 +178,7 @@ actionListner al=new actionListner();
         menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P,KeyEvent.CTRL_DOWN_MASK));
         menuItem2.addActionListener(e->{
             cardLayout.show(centerpanel,"firstPanel");
-            System.out.println(buttonGroup);
+
         });
 
         menu.add(menuItem);
@@ -183,7 +194,54 @@ actionListner al=new actionListner();
         @Override
         public void actionPerformed(ActionEvent e) {
             JButton src=(JButton) e.getSource();
-            if(src.equals("SAVE")){
+            if(src.equals(button2)){
+                //Get the selected Date
+                Date selectedDate=Blocks.cal.getDate();
+
+                //Extracting the year of the selected Date
+                Calendar calendar=Calendar.getInstance();
+                calendar.setTime(selectedDate);
+                 yearOfBirth=calendar.get(Calendar.YEAR);
+                  dayofBirth=calendar.get(Calendar.DAY_OF_MONTH);
+                  monthofBirth=calendar.get(Calendar.MONTH);
+                String bd=dayofBirth+"/"+monthofBirth+"/"+yearOfBirth;
+               String name= NameField.getText();
+               String study=fieldOfStudy.getText();
+               String gender=radioButton.isSelected()?radioButton.getText():radioButton2.isSelected()?radioButton2.getText():"null";
+               String selectedItem=Blocks.combo().getSelectedItem().toString();
+//Age,Gender,Course,Name,field_study,birthDay;
+//                Age=new JLabel();
+//                Gender=new JLabel();
+//                Course=new JLabel();
+//                Name=new JLabel();
+//                field_study=new JLabel();
+//                birthDay=new JLabel();
+
+int years=2024-yearOfBirth;
+
+           if(!name.isBlank()&&!study.isBlank()&&radioButton.isSelected()||radioButton2.isSelected()){
+               Student std=new Student(name,study,bd,selectedItem,gender);
+               students.add(std);
+               for (Student s:students){
+                   String Agetext=String.valueOf(years);
+                   String Gendertext=s.getGender();
+                   String Coursetext=s.getCourse();
+                   String Nametext=s.getName();
+                   String field_studytext=s.getFieldOfStudy();
+                   String birthDaytext=s.getBirthDay();
+Age.setText(Agetext);
+Gender.setText(Gendertext);
+Course.setText(Coursetext);
+Name.setText(Nametext);
+field_study.setText(field_studytext);
+birthDay.setText(birthDaytext);
+                   //System.out.println(Age+ Gender+ Course+ Name +field_study+ birthDay);
+                   NameField.setText("");
+                   fieldOfStudy.setText("");
+               }
+
+
+           }
 
             }
         }

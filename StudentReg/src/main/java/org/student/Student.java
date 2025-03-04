@@ -1,20 +1,18 @@
 package org.student;
 
 public class Student {
-    private String name;
-    private String birthDay;
-    private int age;
-    private String fieldOfStudy;
-    private String course;
-    private String Gender;
+private String name;
+private String fieldOfStudy;
+private String birthDay;
+private String course;
+private String gender;
 
-    public Student(String name, String birthDay, int age, String fieldOfStudy, String course, String gender) {
+    public Student(String name, String fieldOfStudy, String birthDay, String course, String gender) {
         this.name = name;
-        this.birthDay = birthDay;
-        this.age = age;
         this.fieldOfStudy = fieldOfStudy;
+        this.birthDay = birthDay;
         this.course = course;
-        Gender = gender;
+        this.gender = gender;
     }
 
     public String getName() {
@@ -25,28 +23,20 @@ public class Student {
         this.name = name;
     }
 
-    public String getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(String birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public String getFieldOfStudy() {
         return fieldOfStudy;
     }
 
     public void setFieldOfStudy(String fieldOfStudy) {
         this.fieldOfStudy = fieldOfStudy;
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
     }
 
     public String getCourse() {
@@ -58,11 +48,11 @@ public class Student {
     }
 
     public String getGender() {
-        return Gender;
+        return gender;
     }
 
     public void setGender(String gender) {
-        Gender = gender;
+        this.gender = gender;
     }
 }
 

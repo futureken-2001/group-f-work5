@@ -10,7 +10,7 @@ public class Blocks {
     static JPanel west,east,south,north;
     static JLabel label;
     static JComboBox comboBox;
-
+    static JCalendar cal;
     //instance of DataInPutClass
 
     //Setting up panels for proper resizing
@@ -44,9 +44,11 @@ public class Blocks {
     }
 
     public static JCalendar calendar(){
-        JCalendar cal=new JCalendar();
+        cal=new JCalendar();
         cal.setSize(500,800);
         cal.setPreferredSize(new Dimension(400,900));
+
+        cal.getDate();
         return cal;
     }
 
