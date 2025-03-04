@@ -2,16 +2,15 @@ package org.student;
 import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+import java.util.Calendar;
+import java.util.Date;
 
 public class Blocks {
     static JPanel west,east,south,north;
     static JLabel label;
     static JComboBox comboBox;
     static JCalendar cal;
-    //instance of DataInPutClass
+
 
     //Setting up panels for proper resizing
     public static JPanel west(){
@@ -47,20 +46,10 @@ public class Blocks {
         cal=new JCalendar();
         cal.setSize(500,800);
         cal.setPreferredSize(new Dimension(400,900));
-
         cal.getDate();
         return cal;
     }
 
-
-
-
-
-    public static JButton button(String buttonName){
-        JButton btn=new JButton();
-        btn.setText(buttonName);
-        return btn;
-    }
 
 
 

@@ -1,8 +1,6 @@
 package org.student;
 
 import javax.swing.*;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
@@ -27,10 +25,14 @@ public class StudentData {
     ButtonGroup buttonGroup;
     JButton button1,button2;
     int yearOfBirth,dayofBirth,monthofBirth;
-    JLabel Age=new JLabel(),Gender=new JLabel(),Course=new JLabel(),Name=new JLabel(),field_study=new JLabel(),birthDay=new JLabel();
+    JLabel Age=new JLabel(),
+    Gender=new JLabel(),
+    Course=new JLabel(),
+    Name=new JLabel(),
+    field_study=new JLabel(),
+    birthDay=new JLabel();
     JTextField NameField;
     JTextArea fieldOfStudy;
-    String name;
     ArrayList<Student> students=new ArrayList<>();
     JComboBox comboBox;
 actionListner al=new actionListner();
@@ -80,31 +82,8 @@ actionListner al=new actionListner();
         rootNode = new DefaultMutableTreeNode("Root");
         treeModel = new DefaultTreeModel(rootNode);
         jTree = new JTree(treeModel);
-
-//        for (Student item : students) {
-//            DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(item);
-//            rootNode.add(childNode);
-//        }
-        // Expand the tree to show all nodes
-        for (int i = 0; i < jTree.getRowCount(); i++) {
-            jTree.expandRow(i);
-        }
-
-
-
-
-
+        jTree.setSize(new Dimension(400,300));
         // Add a TreeSelectionListener to the tree
-        jTree.addTreeSelectionListener(new TreeSelectionListener() {
-            @Override
-            public void valueChanged(TreeSelectionEvent e) {
-                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
-                if (selectedNode != null && selectedNode != rootNode) {
-                    String selectedItem = selectedNode.getUserObject().toString();
-                    System.out.println(selectedItem);
-                }
-            }
-        });
         return jTree;
     }
     public JComboBox combo(){
@@ -147,9 +126,15 @@ actionListner al=new actionListner();
         panel.add(this.radioButton);
         panel.add(Blocks.label(""));
         panel.add(this.radioButton2);
-        button2.addActionListener(al);
+
         panel.add(button1);
         panel.add(button2);
+
+        //Handling Click events
+        button2.addActionListener(al);
+        button1.addActionListener(e->{
+            cardLayout.show(centerpanel,"secondPanel");
+        });
         return panel;
     }
 
@@ -231,17 +216,18 @@ actionListner al=new actionListner();
                 //Extracting the year of the selected Date
                 Calendar calendar=Calendar.getInstance();
                 calendar.setTime(selectedDate);
-                 yearOfBirth=calendar.get(Calendar.YEAR);
+                  yearOfBirth=calendar.get(Calendar.YEAR);
                   dayofBirth=calendar.get(Calendar.DAY_OF_MONTH);
                   monthofBirth=calendar.get(Calendar.MONTH);
-                String bd=dayofBirth+"/"+monthofBirth+"/"+yearOfBirth;
-               String name= NameField.getText();
-               String study=fieldOfStudy.getText();
-               String gender=radioButton.isSelected()?radioButton.getText():radioButton2.isSelected()?radioButton2.getText():"null";
-               String selectedItem=comboBox.getSelectedItem().toString();
+                  //formating the date 
+                   String bd=dayofBirth+"/"+monthofBirth+"/"+yearOfBirth;
+                   String name= NameField.getText();
+                   String study=fieldOfStudy.getText();
+                   String gender=radioButton.isSelected()?radioButton.getText():radioButton2.isSelected()?radioButton2.getText():"null";
+                   String selectedItem=comboBox.getSelectedItem().toString();
+   int currentYear=Year.now().getValue();
 
-
-           int years=2024-yearOfBirth;
+           int years= currentYear-yearOfBirth;
 
            if(!name.isBlank()&&!study.isBlank()&&radioButton.isSelected()||radioButton2.isSelected()){
                Student std=new Student(name,study,bd,selectedItem,gender);
@@ -253,21 +239,24 @@ actionListner al=new actionListner();
                    String Nametext=s.getName();
                    String field_studytext=s.getFieldOfStudy();
                    String birthDaytext=s.getBirthDay();
-Age.setText(Agetext);
-Gender.setText(Gendertext);
-Course.setText(Coursetext);
-Name.setText(Nametext);
-field_study.setText(field_studytext);
-birthDay.setText(birthDaytext);
+                   
+                   //Assigning values to be displayed
+                Age.setText(Agetext);
+                Gender.setText(Gendertext);
+                Course.setText(Coursetext);
+                Name.setText(Nametext);
+                field_study.setText(field_studytext);
+                birthDay.setText(birthDaytext);
                    DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(s.getName());
                    rootNode.add(childNode);
-                   //System.out.println(Age+ Gender+ Course+ Name +field_study+ birthDay);
+                   
                    NameField.setText("");
                    fieldOfStudy.setText("");
                }
 
 
            }
+
 
             }
         }
