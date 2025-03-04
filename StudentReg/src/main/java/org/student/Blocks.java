@@ -2,13 +2,10 @@ package org.student;
 import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import java.awt.*;
-import java.util.Calendar;
-import java.util.Date;
 
 public class Blocks {
     static JPanel west,east,south,north;
     static JLabel label;
-    static JComboBox comboBox;
     static JCalendar cal;
 
 
@@ -23,15 +20,9 @@ public class Blocks {
         east.setPreferredSize(new Dimension(100,100));
         return east;
     }
-    public static JPanel north(){
-        north=new JPanel();
-        north.setPreferredSize(new Dimension(100,100));
-        return north;
-    }
     public  static JPanel south(){
         south=new JPanel();
         south.setPreferredSize(new Dimension(100,100));
-        //south.setBackground(Color.CYAN);
         return south;
     }
 

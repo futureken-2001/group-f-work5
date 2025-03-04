@@ -35,9 +35,11 @@ public class StudentData {
     JTextArea fieldOfStudy;
     ArrayList<Student> students=new ArrayList<>();
     JComboBox comboBox;
-actionListner al=new actionListner();
+    actionListner al=new actionListner();
     private DefaultMutableTreeNode rootNode;
     private DefaultTreeModel treeModel;
+    DefaultMutableTreeNode childNode;
+
 
     public StudentData(){
         this.DataFrameMethod();
@@ -79,13 +81,15 @@ actionListner al=new actionListner();
     }
     public JTree treeNode(){
 // Create the root node and tree model
-        rootNode = new DefaultMutableTreeNode("Root");
+        rootNode = new DefaultMutableTreeNode("StudentName");
         treeModel = new DefaultTreeModel(rootNode);
         jTree = new JTree(treeModel);
-        jTree.setSize(new Dimension(400,300));
+
         // Add a TreeSelectionListener to the tree
         return jTree;
     }
+
+    //Field study options in a combo box
     public JComboBox combo(){
         String s1[]={"BIT","BSCS","BSSE"};
         comboBox=new JComboBox<>(s1);
@@ -219,15 +223,15 @@ actionListner al=new actionListner();
                   yearOfBirth=calendar.get(Calendar.YEAR);
                   dayofBirth=calendar.get(Calendar.DAY_OF_MONTH);
                   monthofBirth=calendar.get(Calendar.MONTH);
+
                   //formating the date 
                    String bd=dayofBirth+"/"+monthofBirth+"/"+yearOfBirth;
                    String name= NameField.getText();
                    String study=fieldOfStudy.getText();
                    String gender=radioButton.isSelected()?radioButton.getText():radioButton2.isSelected()?radioButton2.getText():"null";
                    String selectedItem=comboBox.getSelectedItem().toString();
-   int currentYear=Year.now().getValue();
-
-           int years= currentYear-yearOfBirth;
+                    int currentYear=Year.now().getValue();
+                    int years= currentYear-yearOfBirth;
 
            if(!name.isBlank()&&!study.isBlank()&&radioButton.isSelected()||radioButton2.isSelected()){
                Student std=new Student(name,study,bd,selectedItem,gender);
@@ -247,11 +251,13 @@ actionListner al=new actionListner();
                 Name.setText(Nametext);
                 field_study.setText(field_studytext);
                 birthDay.setText(birthDaytext);
-                   DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(s.getName());
-                   rootNode.add(childNode);
-                   
+
+                    childNode = new DefaultMutableTreeNode(s.getName());
+                    rootNode.add(childNode);
+
                    NameField.setText("");
                    fieldOfStudy.setText("");
+
                }
 
 
