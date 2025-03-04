@@ -1,7 +1,10 @@
 package org.student;
 
 import javax.swing.*;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,8 +32,10 @@ public class StudentData {
     JTextArea fieldOfStudy;
     String name;
     ArrayList<Student> students=new ArrayList<>();
-
+    JComboBox comboBox;
 actionListner al=new actionListner();
+    private DefaultMutableTreeNode rootNode;
+    private DefaultTreeModel treeModel;
 
     public StudentData(){
         this.DataFrameMethod();
@@ -71,17 +76,42 @@ actionListner al=new actionListner();
         return firstJpanel;
     }
     public JTree treeNode(){
+// Create the root node and tree model
+        rootNode = new DefaultMutableTreeNode("Root");
+        treeModel = new DefaultTreeModel(rootNode);
+        jTree = new JTree(treeModel);
 
-        DefaultMutableTreeNode Users=new DefaultMutableTreeNode("Users");
-        DefaultMutableTreeNode name=new DefaultMutableTreeNode("name");
-        DefaultMutableTreeNode age=new DefaultMutableTreeNode("age");
-        Users.add(name);
-        Users.add(age);
-        jTree=new JTree(Users);
-        jTree.setSize(300,500);
+//        for (Student item : students) {
+//            DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(item);
+//            rootNode.add(childNode);
+//        }
+        // Expand the tree to show all nodes
+        for (int i = 0; i < jTree.getRowCount(); i++) {
+            jTree.expandRow(i);
+        }
+
+
+
+
+
+        // Add a TreeSelectionListener to the tree
+        jTree.addTreeSelectionListener(new TreeSelectionListener() {
+            @Override
+            public void valueChanged(TreeSelectionEvent e) {
+                DefaultMutableTreeNode selectedNode = (DefaultMutableTreeNode) jTree.getLastSelectedPathComponent();
+                if (selectedNode != null && selectedNode != rootNode) {
+                    String selectedItem = selectedNode.getUserObject().toString();
+                    System.out.println(selectedItem);
+                }
+            }
+        });
         return jTree;
     }
-
+    public JComboBox combo(){
+        String s1[]={"BIT","BSCS","BSSE"};
+        comboBox=new JComboBox<>(s1);
+        return comboBox;
+    }
     public JPanel datapanel(){
         JPanel panel=new JPanel();
         button1=new JButton("BACK");
@@ -106,7 +136,7 @@ actionListner al=new actionListner();
         panel.add(Blocks.label("BirthDay"));
         panel.add(Blocks.calendar());
         panel.add(Blocks.label("Course"));
-        panel.add(Blocks.combo());
+        panel.add(this.combo());
         panel.add(Blocks.label("Gender"));
         //Group radio buttons
         buttonGroup = new ButtonGroup();
@@ -208,16 +238,10 @@ actionListner al=new actionListner();
                String name= NameField.getText();
                String study=fieldOfStudy.getText();
                String gender=radioButton.isSelected()?radioButton.getText():radioButton2.isSelected()?radioButton2.getText():"null";
-               String selectedItem=Blocks.combo().getSelectedItem().toString();
-//Age,Gender,Course,Name,field_study,birthDay;
-//                Age=new JLabel();
-//                Gender=new JLabel();
-//                Course=new JLabel();
-//                Name=new JLabel();
-//                field_study=new JLabel();
-//                birthDay=new JLabel();
+               String selectedItem=comboBox.getSelectedItem().toString();
 
-int years=2024-yearOfBirth;
+
+           int years=2024-yearOfBirth;
 
            if(!name.isBlank()&&!study.isBlank()&&radioButton.isSelected()||radioButton2.isSelected()){
                Student std=new Student(name,study,bd,selectedItem,gender);
@@ -235,6 +259,8 @@ Course.setText(Coursetext);
 Name.setText(Nametext);
 field_study.setText(field_studytext);
 birthDay.setText(birthDaytext);
+                   DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(s.getName());
+                   rootNode.add(childNode);
                    //System.out.println(Age+ Gender+ Course+ Name +field_study+ birthDay);
                    NameField.setText("");
                    fieldOfStudy.setText("");

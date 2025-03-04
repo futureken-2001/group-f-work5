@@ -52,11 +52,7 @@ public class Blocks {
         return cal;
     }
 
-    public static JComboBox combo(){
-        String s1[]={"BIT","BSCS","BSSE"};
-        comboBox=new JComboBox<>(s1);
-        return comboBox;
-    }
+
 
 
 
