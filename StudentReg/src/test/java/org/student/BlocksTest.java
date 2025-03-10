@@ -1,43 +1,41 @@
 package org.student;
-
-import static org.junit.jupiter.api.Assertions.*;
-import org.junit.jupiter.api.Test;
 import com.toedter.calendar.JCalendar;
+import org.junit.jupiter.api.Test;
 import javax.swing.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class BlocksTest {
-
     @Test
     void testWestPanel() {
-        JPanel panel = Blocks.createWestPanel();
+        JPanel panel = Blocks.west();
         assertNotNull(panel);
         assertEquals(150, panel.getPreferredSize().width);
     }
 
     @Test
     void testEastPanel() {
-        JPanel panel = Blocks.createEastPanel();
+        JPanel panel = Blocks.east();
         assertNotNull(panel);
         assertEquals(100, panel.getPreferredSize().width);
     }
 
     @Test
     void testSouthPanel() {
-        JPanel panel = Blocks.createSouthPanel();
+        JPanel panel = Blocks.south();
         assertNotNull(panel);
         assertEquals(100, panel.getPreferredSize().width);
     }
 
     @Test
     void testLabel() {
-        JLabel label = Blocks.createLabel("Hello");
+        JLabel label = Blocks.label("Hello");
         assertNotNull(label);
         assertEquals("Hello", label.getText());
     }
 
     @Test
     void testCalendar() {
-        JCalendar calendar = Blocks.createCalendar();
+        JCalendar calendar = Blocks.calendar();
         assertNotNull(calendar);
     }
 }
