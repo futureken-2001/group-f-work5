@@ -10,7 +10,6 @@ public class BlocksTest {
         JPanel panel = Blocks.west();
         assertNotNull(panel);
         assertEquals(150, panel.getPreferredSize().width);
-
     }
 
     @Test
