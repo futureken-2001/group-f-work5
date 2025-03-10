@@ -19,6 +19,7 @@ public class BlocksTest {
         assertEquals(100, panel.getPreferredSize().width);
     }
 
+
     @Test
     void testSouthPanel() {
         JPanel panel = Blocks.south();
